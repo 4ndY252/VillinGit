@@ -7,48 +7,61 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.TextView;
 
 import com.example.projectexodus.R;
-import com.example.projectexodus.light.maps_light;
-import com.example.projectexodus.light.search_light;
+
+
+import android.util.Log;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.google.gson.Gson;
 
 import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 
-public class table_dark extends AppCompatActivity {
+public class table_dark extends AppCompatActivity implements PlaceAdapter.OnItemSelected {
     private Button search;
     private Button maps;
 
     @Override
-    protected void onCreate (Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         ActionBar actionBar = getSupportActionBar();
         actionBar.hide();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_table_dark);
 
-        TextView textView = (TextView) findViewById(R.id.text);
 
         search = findViewById(R.id.search);
-        search.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                openSearch();
-            }
-        });
+        search.setOnClickListener(view -> openSearch());
 
         maps = findViewById(R.id.maps);
-        maps.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                openMaps();
-            }
-        });
+        maps.setOnClickListener(view -> openMaps());
 
-        File file = new File("data.json");
+        // Parse JSON (Parsing raw JSON file into array of places (notice Place[].class))
+        Gson gson = new Gson();
+        InputStream stream = getResources().openRawResource(R.raw.data);
+        Place[] places = gson.fromJson(new BufferedReader(new InputStreamReader(stream)), Place[].class);
+
+
+        // Create recycler manager (way of showing views) and adapter (what views to show)
+        RecyclerView recyclerView = findViewById(R.id.recycler);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+        PlaceAdapter adapter = new PlaceAdapter(places, this, this);
+
+        // Set recycler manager and adapter
+        // Adapter automatically starts to attach place views
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setAdapter(adapter);
+    }
+
+
+
+
+       /* File file = new File("data.json");
         BufferedReader reader = null;
         try {
             reader = new BufferedReader(new FileReader(file));
@@ -78,17 +91,22 @@ public class table_dark extends AppCompatActivity {
         }
         } catch (IOException e) {
             e.printStackTrace();
-        }
-    }
+        } */
 
-    public void openSearch(){
+       // Interface call... Adapter calls this method on click of a place view...
+       @Override
+       public void onPlaceSelected(Place place) {
+           Log.d("PLACE SELECTED: ", place.toString());
+       }
+
+    public void openSearch() {
         Intent intent = new Intent(this, search_dark.class);
         startActivity(intent);
     }
-    public void openMaps(){
+
+    public void openMaps() {
         Intent intent = new Intent(this, maps_dark.class);
         startActivity(intent);
     }
 
 }
-

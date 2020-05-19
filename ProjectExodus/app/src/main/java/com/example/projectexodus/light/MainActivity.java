@@ -5,11 +5,13 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
 import com.example.projectexodus.R;
 import com.example.projectexodus.dark.Home_dark;
+import com.example.projectexodus.dark.Place;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -29,21 +31,14 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main_light);
 
         button = findViewById(R.id.button);
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                table_light();
-            }
-        });
+        button.setOnClickListener(view -> table_light());
         buttondark = findViewById(R.id.buttondark);
-        buttondark.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                openHome_dark();
-            }
-        });
+        buttondark.setOnClickListener(view -> openHome_dark());
+
+
 
     }
+
     public void table_light(){
         Intent intent = new Intent(this, table_light.class);
         startActivity(intent);
