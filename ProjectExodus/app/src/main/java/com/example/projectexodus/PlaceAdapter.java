@@ -1,4 +1,4 @@
-package com.example.projectexodus.light;
+package com.example.projectexodus;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -7,17 +7,18 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.projectexodus.R;
+import java.util.Arrays;
+import java.util.List;
 
 public class PlaceAdapter extends RecyclerView.Adapter<PlaceViewHolder> {
 
-    private Place[] places;             // What items to show
+    private List<Place> places;             // What items to show
     private Context context;            // Context used to inflate views.. (create their layout)
     private OnItemSelected listener;    // Interface listener which is used when user clicks on a place view
 
     // Constructor requiring all values mentioned above
     PlaceAdapter(Place[] places, Context context, OnItemSelected listener) {
-        this.places = places;
+        this.places = Arrays.asList(places);
         this.context = context;
         this.listener = listener;
     }
@@ -35,17 +36,22 @@ public class PlaceAdapter extends RecyclerView.Adapter<PlaceViewHolder> {
     public void onBindViewHolder(@NonNull PlaceViewHolder holder, int position) {
         // This method is called when views are created and ready to attach values to... (in our case Place class)
         // So, we just set the place to a view at position... values are handled in PlaceViewHolder class not in adapter
-        holder.setPlace(places[position]);
+        holder.setPlace(places.get(position));
         // This line is basically just setting an onClickListener so we know when user selected a Place
         // It calls method onPlaceSelected with parameter of place[position] (place user had chosen)
-        holder.itemView.setOnClickListener(view -> listener.onPlaceSelected(places[position]));
+        holder.itemView.setOnClickListener(view -> listener.onPlaceSelected(places.get(position)));
     }
 
     @Override
     public int getItemCount() {
         // This method represents just how many views should adapter create...
         // In our case we use all places
-        return places.length;
+        return places.size();
+    }
+
+    public void setItems(List<Place> places){
+        this.places = places;
+        notifyDataSetChanged();
     }
 
     // This interface is for letting the activity know what place user chose

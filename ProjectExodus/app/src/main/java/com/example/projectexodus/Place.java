@@ -1,4 +1,4 @@
-package com.example.projectexodus.light;
+package com.example.projectexodus;
 
 /**
  * Place class

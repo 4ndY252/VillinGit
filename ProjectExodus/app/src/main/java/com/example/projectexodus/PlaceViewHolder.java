@@ -1,4 +1,4 @@
-package com.example.projectexodus.light;
+package com.example.projectexodus;
 
 import android.view.View;
 import android.widget.TextView;
@@ -6,6 +6,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.projectexodus.Place;
 import com.example.projectexodus.R;
 
 /**
