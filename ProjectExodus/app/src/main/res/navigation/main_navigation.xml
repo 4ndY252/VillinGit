@@ -22,17 +22,9 @@
         android:label="fragment_table"
         tools:layout="@layout/fragment_table" >
         <action
-            android:id="@+id/action_tableFragment_to_mapsFragment"
-            app:destination="@id/maps" />
-        <action
             android:id="@+id/action_tableFragment_to_searchFragment"
             app:destination="@id/search" />
     </fragment>
-    <fragment
-        android:id="@+id/maps"
-        android:name="com.example.projectexodus.MapsFragment"
-        android:label="fragment_maps"
-        tools:layout="@layout/fragment_maps" />
     <fragment
         android:id="@+id/search"
         android:name="com.example.projectexodus.SearchFragment"

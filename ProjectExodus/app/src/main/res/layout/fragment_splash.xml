@@ -20,6 +20,8 @@
         android:id="@+id/showButton"
         android:layout_width="100dp"
         android:layout_height="wrap_content"
+        android:backgroundTint="#EDEDED"
+        android:fontFamily="sans-serif"
         android:text="Ukáž mi"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
